@@ -12,9 +12,10 @@ class App extends Component {
     }
   }
   componentDidMount() {
-    fetch('http://starlord.hackerearth.com/recipe')
+    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+    targetUrl = 'https://s3-ap-southeast-1.amazonaws.com/he-public-data/users49b8675.json'
+    fetch(proxyUrl + targetUrl)
       .then(response => {
-        console.log(response.body);
         return response.json();
       })
       .then(users => {
@@ -25,30 +26,20 @@ class App extends Component {
 
   }
 
-  // onSearchChange = (event) => {
-  //   // console.log(event.target.value)
-  //   console.log(this.state.UserImages);
-  //   let myData;
-  //   if(event.target.value === 'asc'){
-  //     myData = [].concat(this.state.UserImages)
-  //   .sort((a, b) => a.likes > b.likes ? 1 : -1);
-  //   }else if(event.target.value === 'dsc'){
-  //     myData = [].concat(this.state.UserImages)
-  //   .sort((a, b) => a.likes > b.likes ? -1 : 1);
-  //   }
-  //   else if(event.target.value === 'asctime'){
-  //     myData = [].concat(this.state.UserImages)
-  //   .sort((a, b) => a.timestamp.localeCompare(b.timestamp));
-  //   }
-  //   else if(event.target.value === 'dsctime'){
-  //     myData = [].concat(this.state.UserImages)
-  //   .sort((a, b) => b.timestamp.localeCompare(a.timestamp));
-  //   }
+  onSearchChange = (event) => {
+    let myData;
+    if(event.target.value === 'asc'){
+      myData = [].concat(this.state.UserImages)
+    .sort((a, b) => a.name > b.name ? 1 : -1);
+    }else if(event.target.value === 'dsc'){
+      myData = [].concat(this.state.UserImages)
+    .sort((a, b) => a.name > b.name ? -1 : 1);
+    }
   
-  //   this.setState({
-  //         UserImages: myData
-  //       })
-  // }
+    this.setState({
+          UserImages: myData
+        })
+  }
 
   render() {
     const { UserImages } = this.state;
@@ -57,13 +48,11 @@ class App extends Component {
       <h1>loading...</h1> :
       (
         <div className='tc'>
-          <h1 className='f1'>Recipe</h1>
-          {/* <div className="ph3">
-            <button className="f6 link dim br2 ph3 pv2 mb2 dib white bg-light-purple ma2" value="asc" onClick={this.onSearchChange}>Filter Likes ascending </button >
-            <button className="f6 link dim br2 ph3 pv2 mb2 dib white bg-hot-pink ma2" value="dsc" onClick={this.onSearchChange}>Filter Likes descending</button >
-            <button className="f6 link dim br2 ph3 pv2 mb2 dib white bg-purple ma2" value="asctime" onClick={this.onSearchChange}>Filter timestamp ascending </button >
-            <button className="f6 link dim br2 ph3 pv2 mb2 dib white bg-dark-pink ma2" value="dsctime" onClick={this.onSearchChange}>Filter timestamp descending</button >
-          </div> */}
+          <h1 className='f1'>Create Group</h1>
+          <div className="ph3">
+            <button className="f6 link dim br2 ph3 pv2 mb2 dib white bg-light-purple ma2" value="asc" onClick={this.onSearchChange}>Sort names ascending </button >
+            <button className="f6 link dim br2 ph3 pv2 mb2 dib white bg-hot-pink ma2" value="dsc" onClick={this.onSearchChange}>Sort names descending</button >
+          </div>
           <Scroll>
             <ErrorBoundry>
               <CardList UserImages={UserImages} />

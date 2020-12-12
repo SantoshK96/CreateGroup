@@ -1,6 +1,6 @@
 {
-  "name": "Recipe",
-  "homepage": "https://github.com/SantoshK96/BuyRecipe.git",
+  "name": "CreateGroup",
+  "homepage": "https://github.com/SantoshK96/CreateGroup.git",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
